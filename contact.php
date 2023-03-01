@@ -1,31 +1,76 @@
-<?php 
+<?php
+if (isset($_POST['submit'])) {
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+  $email = $_POST['email'];
+  $subject = $_POST['subject'];
+  $message = $_POST['message'];
 
-      require_once('_inc/header.php');
-      require_once('_inc/nav.php');
-     //require_once('_inc/function.php');
-    
+  $submissionDate = new DateTime();
+  $submissionDate->setTimestamp($_SERVER['REQUEST_TIME']);
+
+  $submissionDateFormatted = $submissionDate->format('d/m/Y H:i:s');
+}
 ?>
+<?php include '_inc/functions.php'; ?>
+<?php include '_inc/header.php'; ?>
+<?php include '_inc/nav.php'; ?>
+
+<main>
+  <h1>Contactez-nous</h1>
+
+  <?php if (isset($_POST['submit'])) : ?>
+    <p>Merci <?php echo $firstname . ' ' . $lastname; ?> pour votre message :</p>
+    <ul>
+      <li><strong>Email :</strong> <?php echo $email; ?></li>
+      <li><strong>Sujet :</strong> <?php echo $subject; ?></li>
+      <li><strong>Message :</strong> <?php echo $message; ?></li>
+      <li><strong>Date de soumission :</strong> <?php echo $submissionDateFormatted; ?></li>
+    </ul>
+  <?php endif; ?>
+
+  <main>
+  
+  <?php processContactForm(); ?>
+ <center>
+  <form method="post">
+   
+    <br/>
+    <div class="form-group">
+    <label for="firstname">Prénom :</label>
+    <input type="text" name="firstname" id="firstname">
+  </div>
+
+  <br/>
+    <div class="form-group">
+    <label for="lastname">Nom :</label>
+    <input type="text" name="lastname" id="lastname">
+  </div>
+  <br/>
+    <div class="form-group">
+    <label for="email">Email :</label>
+    <input type="email" name="email" id="email">
+  </div>
+
+  <br/>
+    <div class="form-group">
+    <label for="subject">Sujet :</label>
+    <input type="text" name="subject" id="subject">
+  </div>
 
 
-<div class="container">
-  <form action="action_page.php">
+  <div class="form-group">
+  <label for="message">Message :</label>
+    <textarea name="message" id="message"></textarea>
+  </div>
 
-    <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+   <br/>
+    <button type="submit" name="submit" class="btn btn-primary">Envoyer</button>
 
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+  </form>  
+</center>
+</main>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Your email">
-
-    <label for="subject">Subject</label>
-    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-
-    <input type="submit" value="Submit">
-
-  </form>
-</div>
  
   <?php 
   
