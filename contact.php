@@ -2,6 +2,7 @@
 
       require_once('_inc/header.php');
       require_once('_inc/nav.php');
+     //require_once('_inc/function.php');
     
 ?>
 
@@ -15,12 +16,8 @@
     <label for="lname">Last Name</label>
     <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
-    <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Your email">
 
     <label for="subject">Subject</label>
     <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
