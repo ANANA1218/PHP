@@ -6,14 +6,15 @@ if (isset($_POST['submit'])) {
   $subject = $_POST['subject'];
   $message = $_POST['message'];
 
-  if (empty($firstname) || empty($lastname) || empty($email) || empty($subject) || empty($message)) {
-    $error_message = 'Tous les champs sont obligatoires dans le formulaire.';
-  } else {
   
+  if (empty($firstname) || empty($lastname) || empty($email) || empty($subject) || empty($message)) {
+    $error_message = 'Tous les champs sont obligatoires.';
+  } else {
+
     $submissionDate = new DateTime();
     $submissionDate->setTimestamp($_SERVER['REQUEST_TIME']);
+
     $submissionDateFormatted = $submissionDate->format('d/m/Y H:i:s');
-   
   }
 }
 
@@ -21,7 +22,6 @@ if (isset($_POST['submit'])) {
 <?php include '_inc/functions.php'; ?>
 <?php include '_inc/header.php'; ?>
 <?php include '_inc/nav.php'; ?>
-
 
 <main>
   <div class="container">
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
   </div>
-  <center><?php processContactForm(); ?>  </center>
+  
   <?php if (isset($_POST['submit'])) : ?>
     <center>
     <p>Merci <?php echo $firstname . ' ' . $lastname; ?> pour votre message :</p>
@@ -68,21 +68,14 @@ if (isset($_POST['submit'])) {
       <li><strong>Sujet :</strong> <?php echo $subject; ?></li>
       <li><strong>Message :</strong> <?php echo $message; ?></li>
       <li><strong>Date de soumission :</strong> <?php echo $submissionDateFormatted; ?></li>
+    </ul>
     </center>
-      <?php endif; ?>
-
-      <?php if (isset($error_message)) : ?>
+  <?php endif; ?>
+  <?php if (isset($error_message)) : ?>
         <center>
       <p class="error"><?php echo $error_message; ?></p>
       </center>
       <?php endif; ?>
-
 </main>
 
- 
-  <?php 
-  
-       require_once('_inc/footer.php');
-    
-?>
-  
+<?php require_once('_inc/footer.php'); ?>```
