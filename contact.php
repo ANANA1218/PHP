@@ -1,21 +1,30 @@
 <?php
-if (isset($_POST['submit'])) {
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $email = $_POST['email'];
-  $subject = $_POST['subject'];
-  $message = $_POST['message'];
+// Initialisation des variables
+$firstname = '';
+$lastname = '';
+$email = '';
+$subject = '';
+$message = '';
+$submissionDateFormatted = '';
 
-  
-  if (empty($firstname) || empty($lastname) || empty($email) || empty($subject) || empty($message)) {
-    $error_message = 'Tous les champs sont obligatoires.';
-  } else {
+// Traitement du formulaire lors de la soumission
+if (isset($_POST['submit'])) {
+    // Récupération des données soumises par l'utilisateur
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+ // if (empty($firstname) || empty($lastname) || empty($email) || empty($subject) || empty($message)) {
+   // $error_message = 'Tous les champs sont obligatoires.';
+ // } else {
 
     $submissionDate = new DateTime();
     $submissionDate->setTimestamp($_SERVER['REQUEST_TIME']);
 
     $submissionDateFormatted = $submissionDate->format('d/m/Y H:i:s');
-  }
+ // }
 }
 
 ?>
@@ -59,9 +68,9 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
   </div>
-  
-  <?php if (isset($_POST['submit'])) : ?>
-    <center>
+  //<center><?php processContactForm(); ?>  </center>
+  <?php if (isset($_POST['submit']) && !empty($firstname) && !empty($lastname) && !empty($email) && !empty($subject) && !empty($message)) : ?>
+  <center>
     <p>Merci <?php echo $firstname . ' ' . $lastname; ?> pour votre message :</p>
     <ul>
       <li><strong>Email :</strong> <?php echo $email; ?></li>
@@ -69,8 +78,9 @@ if (isset($_POST['submit'])) {
       <li><strong>Message :</strong> <?php echo $message; ?></li>
       <li><strong>Date de soumission :</strong> <?php echo $submissionDateFormatted; ?></li>
     </ul>
-    </center>
-  <?php endif; ?>
+  </center>
+<?php endif; ?>
+
   <?php if (isset($error_message)) : ?>
         <center>
       <p class="error"><?php echo $error_message; ?></p>
