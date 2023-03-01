@@ -62,18 +62,37 @@ function processContactForm() {
 }
 }
 
-function connectDB() {
-  $servername = "localhost";
-  $username = "your_username";
-  $password = "your_password";
-  $dbname = "videogames";
-
-  $conn = new mysqli($servername, $username, $password, $dbname);
-
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
-
-  return $conn;
+function connectDB():PDO {
+  
+  $connection=new PDO('mysql:host=127.0.0.1; dbname=videogames', 'root', '' ,[ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, ] );
+  return $connection;
 }
+function getThreeRandomGames($number) {
+  $connection = connectDB();
+  $stmt = $connection->prepare('SELECT * FROM game ORDER BY RAND() LIMIT :number');
+  $stmt->bindParam(':number', $number, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll();
+}
+
+function getAllGames() {
+  $pdo = connectDB();
+  $query = "SELECT * FROM game";
+  $stmt = $pdo->prepare($query);
+  $stmt->execute();
+  $games = $stmt->fetchAll();
+  return $games;
+}
+
+function getGameById($id) {
+  $pdo = connectDB();
+  $query = "SELECT * FROM game WHERE id = :id";
+  $stmt = $pdo->prepare($query);
+  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+  $game = $stmt->fetch();
+  return $game;
+}
+
+
 ?>

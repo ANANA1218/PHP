@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
       </div>
     </div>
   </div>
-  //<center><?php processContactForm(); ?>  </center>
+ <center><?php processContactForm(); ?>  </center>
   <?php if (isset($_POST['submit']) && !empty($firstname) && !empty($lastname) && !empty($email) && !empty($subject) && !empty($message)) : ?>
   <center>
     <p>Merci <?php echo $firstname . ' ' . $lastname; ?> pour votre message :</p>
