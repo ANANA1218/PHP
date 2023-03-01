@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
     $message = $_POST['message'];
 
  // if (empty($firstname) || empty($lastname) || empty($email) || empty($subject) || empty($message)) {
-   // $error_message = 'Tous les champs sont obligatoires.';
+    //$error_message = 'Tous les champs sont obligatoires.';
  // } else {
 
     $submissionDate = new DateTime();
