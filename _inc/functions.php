@@ -35,15 +35,15 @@ function processContactForm() {
     $message = $_POST['message'];
 
     $errors = array();
-
+//Contrainte de validation pour le sujet 
     if (!isLong($subject)) {
       $errors[] = "Le sujet doit comporter au moins 10 caractères.";
     }
-
+//Contrainte de validation pour le message
     if (!isLong($message)) {
       $errors[] = "Le message doit comporter au moins 10 caractères.";
     }
-
+//Contrainte de validation pour l'email 
     if (!isEmail($email)) {
       $errors[] = "L'adresse email n'est pas valide.";
     }
