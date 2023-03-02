@@ -8,6 +8,36 @@ function isLong($string) {
   return strlen($string) >= 10;
 }
 
+/*
+
+function processForm():void {
+  if (isSubmitted() && isValid()) {
+    echo 'formulaire soumis et valide'
+  } else {
+
+  }
+}
+
+
+function isSubmitted():bool {
+ return isset($_POST['submit']);
+   
+}
+
+function isValid():bool {
+  $constraints =[
+    
+  ]
+    
+ }
+
+function getValues():array {
+  return$_POST;
+    
+ }
+ 
+*/
+
 function processContactForm() {
   if (isset($_POST['submit'])) {
     $firstname = $_POST['firstname'];
@@ -50,6 +80,10 @@ function processContactForm() {
       echo "<li><strong>Message :</strong> $message</li>";
       echo "<li><strong>Date de soumission :</strong> $submissionDateFormatted</li>";
       echo "</ul>";
+      
+      header('Location: index.php');
+      exit;
+      
     } else {
       echo "<ul>";
       foreach ($errors as $error) {
@@ -67,6 +101,7 @@ function connectDB():PDO {
   $connection=new PDO('mysql:host=127.0.0.1; dbname=videogames', 'root', '' ,[ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, ] );
   return $connection;
 }
+
 function getThreeRandomGames($number) {
   $connection = connectDB();
   $stmt = $connection->prepare('SELECT * FROM game ORDER BY RAND() LIMIT :number');
@@ -92,6 +127,92 @@ function getGameById($id) {
   $stmt->execute();
   $game = $stmt->fetch();
   return $game;
+}
+
+function validateLoginForm(array $data): array {
+  $errors = [];
+  
+  // Vérification de l'email
+  if (empty($data['email'])) {
+    $errors[] = "L'email est obligatoire";
+  } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "L'email n'est pas valide";
+  }
+
+  // Vérification du mot de passe
+  if (empty($data['password'])) {
+    $errors[] = "Le mot de passe est obligatoire";
+  }
+  
+  return $errors;
+}
+
+
+function getAdminByEmail($email) {
+  $connection = connectDB();
+  $sql = "SELECT * FROM user WHERE email = :email";
+  $query = $connection->prepare($sql);
+  $query->execute(['email' => $email]);
+  $user = $query->fetch(PDO::FETCH_ASSOC);
+  return $user;
+}
+
+function verifyAdminCredentials(string $email, string $password): mixed {
+  $user = getAdminByEmail($email);
+  if ($user && password_verify($password, $user['password'])) {
+    return $user;
+  } else {
+    return false;
+  }
+}
+
+
+function processLoginForm() {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		// Vérification des contraintes de validation du formulaire
+		$errors = [];
+
+		if (count($errors) === 0) {
+			// Vérification de l'existence de l'administrateur
+			$user = getAdminByEmail($_POST['email']);
+
+			if ($user !== false) {
+				// Vérification de l'identifiant et du mot de passe
+				if (verifyAdminCredentials($_POST['email'], $_POST['password'])) {
+					// L'administrateur est authentifié, on redirige vers la page d'accueil de l'espace d'administration
+					header('Location: admin.php');
+					exit;
+				} else {
+					$errors[] = 'Identifiant ou mot de passe incorrect';
+				}
+			} else {
+				$errors[] = 'Identifiant ou mot de passe incorrect';
+			}
+		}
+
+		if (count($errors) > 0) {
+			// Affichage des erreurs
+			echo '<div class="error">';
+			echo '<ul>';
+			foreach ($errors as $error) {
+				echo '<li>' . $error . '</li>';
+			}
+			echo '</ul>';
+			echo '</div>';
+		}
+	}
+}
+
+
+
+function createUserAccount(string $email, string $password): void {
+  $connection = connectDB();
+  $sql = 'INSERT INTO videogames.user value(null, :email, :password)';
+  $query = $connection->prepare($sql);
+  $query->execute([
+    'email' => $email,
+    'password' => password_hash($password, PASSWORD_ARGON2I),
+  ]);
 }
 
 

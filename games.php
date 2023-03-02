@@ -3,23 +3,13 @@
       require_once('_inc/header.php');
       require_once('_inc/nav.php');
     //  require_once('_inc/function.php');
-?>
-
-<?php 
-  
-$games = getAllGames();
-$randomGames = array_rand($games, 3);
-$selectedGames = array();
-foreach ($randomGames as $game) {
-  $selectedGames[] = $games[$game];
-}
-
+    $allGames = getAllGames();
 ?>
 <br/>
 <br/>
 <br/>
 <div class="row">
-  <?php foreach ($selectedGames as $game): ?>
+  <?php foreach ($allGames as $game): ?>
 
     <div class="col-sm-4 mb-3">
       <div class="card h-100">
@@ -31,6 +21,7 @@ foreach ($randomGames as $game) {
         </div>
       </div>
     </div>
+
   <?php endforeach ?>
 </div>
 
@@ -38,9 +29,9 @@ foreach ($randomGames as $game) {
 <br/>
 <br/>
 
-  <?php 
+<?php 
   
-       require_once('_inc/footer.php');
-    
+  require_once('_inc/footer.php');
+
 ?>
-  
+
