@@ -1,9 +1,11 @@
 <?php 
-session_start();
+
 //require_once('_inc/functions.php');
 require_once('_inc/function.php');
 require_once('_inc/header.php');
 require_once('_inc/nav.php');
+session_start();
+
 ?>
 
 <main>
@@ -36,6 +38,12 @@ require_once('_inc/nav.php');
     // Test de la connexion avec les informations d'identification "johndoe@example.com" et "secret123"
 
     processForm();
+    $notice = getSessionFlashMessage('notice');
+	
+	// Affichage de la notice s'il y en a une
+	if ($notice != null) {
+		echo "<p>$notice</p>";
+	}
   ?>
 </center>
 </main>

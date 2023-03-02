@@ -26,6 +26,8 @@ function isLong(string $value, int $lenght):bool {
   }
 
 
+
+
   function checkConstraints(array $constraints):bool{
     $validation = true; 
     foreach($constraints as $name => $field){
@@ -70,6 +72,32 @@ return true;
   }
   
 
+  function processForm(): void {
+    if (isset($_POST['submit'])) {
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      //if (isSubmitted() && isValid()){
+      if (checkUser($email, $password)) {
+        $_SESSION['user'] = $email;
+        header('Location: index.php');
+        exit;
+      } else {
+        $_SESSION['notice'] = 'Identifiants incorrects';
+      }
+   /// }
+    }
+  }
+  
+function getSessionFlashMessage($key) {
+  if (array_key_exists($key, $_SESSION)) {
+    $message = $_SESSION[$key];
+    unset($_SESSION[$key]);
+    return $message;
+  } else {
+    return null;
+  }
+}
+/*
 function processForm():void
 {
 if (isSubmitted() && isValid()){
@@ -83,7 +111,7 @@ if (isSubmitted() && isValid()){
     };
 }
 }
-
+*/
 
 
 
