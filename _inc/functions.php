@@ -4,19 +4,16 @@ function isEmail($email) {
   return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-function isLong($string) {
+function isLong($string ):bool {
   return strlen($string) >= 10;
 }
 
-/*
 
-function processForm():void {
-  if (isSubmitted() && isValid()) {
-    echo 'formulaire soumis et valide'
-  } else {
-
-  }
+function isLongs(string $value, int $length):bool {
+  return strlen($value) >= $length ? true : false;
 }
+
+
 
 
 function isSubmitted():bool {
@@ -24,19 +21,46 @@ function isSubmitted():bool {
    
 }
 
-function isValid():bool {
-  $constraints =[
-    
-  ]
-    
- }
 
 function getValues():array {
   return$_POST;
     
  }
  
-*/
+
+ function checkUser(string $email, string $password):bool {
+  if (!getUserByLogin($email)){
+    return false;
+  }
+
+  if (!password_verify($password,getUserByLogin($email)['password'],)){
+    return false;
+  }
+    return true;
+ }
+ 
+
+ function getUserByLogin(string $login):array|bool {
+  $connection = connectDB();
+  $sql = "SELECT email, password FROM user WHERE email = :login";
+  $query = $connection->prepare($sql);
+  $query->execute(['login' => $login]);
+ 
+  return $query->fetch() ?? false;
+}
+
+function createUserAccount(string $email, string $password): void {
+  $connection = connectDB();
+  $sql = 'INSERT INTO videogames.user value(null, :email, :password)';
+  $query = $connection->prepare($sql);
+  $query->execute([
+    'email' => $email,
+    'password' => password_hash($password, PASSWORD_ARGON2I),
+  ]);
+}
+
+
+
 
 function processContactForm() {
   if (isset($_POST['submit'])) {
@@ -206,15 +230,7 @@ function processLoginForm() {
 
 
 
-function createUserAccount(string $email, string $password): void {
-  $connection = connectDB();
-  $sql = 'INSERT INTO videogames.user value(null, :email, :password)';
-  $query = $connection->prepare($sql);
-  $query->execute([
-    'email' => $email,
-    'password' => password_hash($password, PASSWORD_ARGON2I),
-  ]);
-}
+
 
 
 ?>
