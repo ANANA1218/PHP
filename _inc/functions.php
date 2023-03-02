@@ -97,13 +97,8 @@ function processContactForm() {
 
       $submissionDateFormatted = $submissionDate->format('d/m/Y H:i:s');
 
-      echo "<p>Merci $firstname $lastname pour votre message :</p>";
-      echo "<ul>";
-      echo "<li><strong>Email :</strong> $email</li>";
-      echo "<li><strong>Sujet :</strong> $subject</li>";
-      echo "<li><strong>Message :</strong> $message</li>";
-      echo "<li><strong>Date de soumission :</strong> $submissionDateFormatted</li>";
-      echo "</ul>";
+      // Ajout de la notice dans la session
+      $_SESSION['notice'] = "Vous serez contacté dans les plus brefs délais.";
 
       header('Location: index.php');
       exit;
@@ -117,7 +112,7 @@ function processContactForm() {
       }
       echo "</ul>";
     }
-}
+  }
 }
 
 function connectDB():PDO {

@@ -1,4 +1,5 @@
 <?php 
+session_start();
       require_once('_inc/functions.php');
       require_once('_inc/header.php');
       require_once('_inc/nav.php');
