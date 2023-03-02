@@ -4,6 +4,7 @@ session_start();
       require_once('_inc/header.php');
       require_once('_inc/nav.php');
     //  require_once('_inc/function.php');
+    $notice = getSessionFlashMessage('notice');
 ?>
 
 <?php 
@@ -16,6 +17,12 @@ foreach ($randomGames as $game) {
 }
 
 ?>
+<?php
+  // Affichage du message de la session si celui-ci existe
+  if ($notice !== null) {
+    echo "<p>$notice</p>";
+  }
+  ?>
 <br/>
 <br/>
 <br/>

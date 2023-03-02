@@ -60,6 +60,15 @@ function createUserAccount(string $email, string $password): void {
 }
 
 
+function getSessionFlashMessage($key) {
+  if (array_key_exists($key, $_SESSION)) {
+    $message = $_SESSION[$key];
+    unset($_SESSION[$key]);
+    return $message;
+  } else {
+    return null;
+  }
+}
 
 
 function processContactForm() {
