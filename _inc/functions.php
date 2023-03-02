@@ -80,7 +80,7 @@ function processContactForm() {
       echo "<li><strong>Message :</strong> $message</li>";
       echo "<li><strong>Date de soumission :</strong> $submissionDateFormatted</li>";
       echo "</ul>";
-      
+
       header('Location: index.php');
       exit;
       
@@ -148,7 +148,7 @@ function validateLoginForm(array $data): array {
 }
 
 
-function getAdminByEmail($email) {
+function getUserByEmail($email) {
   $connection = connectDB();
   $sql = "SELECT * FROM user WHERE email = :email";
   $query = $connection->prepare($sql);
@@ -158,7 +158,7 @@ function getAdminByEmail($email) {
 }
 
 function verifyAdminCredentials(string $email, string $password): mixed {
-  $user = getAdminByEmail($email);
+  $user = getUserByEmail($email);
   if ($user && password_verify($password, $user['password'])) {
     return $user;
   } else {
@@ -168,40 +168,41 @@ function verifyAdminCredentials(string $email, string $password): mixed {
 
 
 function processLoginForm() {
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		// Vérification des contraintes de validation du formulaire
-		$errors = [];
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Vérification des contraintes de validation du formulaire
+      $errors = [];
 
-		if (count($errors) === 0) {
-			// Vérification de l'existence de l'administrateur
-			$user = getAdminByEmail($_POST['email']);
+      // Vérification de l'existence de l'utilisateur
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $user = getUserByEmail($email);
 
-			if ($user !== false) {
-				// Vérification de l'identifiant et du mot de passe
-				if (verifyAdminCredentials($_POST['email'], $_POST['password'])) {
-					// L'administrateur est authentifié, on redirige vers la page d'accueil de l'espace d'administration
-					header('Location: admin.php');
-					exit;
-				} else {
-					$errors[] = 'Identifiant ou mot de passe incorrect';
-				}
-			} else {
-				$errors[] = 'Identifiant ou mot de passe incorrect';
-			}
-		}
+      if ($user !== false) {
+          // Vérification du mot de passe
+          if (password_verify($password, $user['password'])) {
+              // L'utilisateur est authentifié, on redirige vers la page d'accueil
+              header('Location: index.php');
+              exit;
+          } else {
+              $errors[] = 'Identifiant ou mot de passe incorrect';
+          }
+      } else {
+          $errors[] = 'Identifiant ou mot de passe incorrect';
+      }
 
-		if (count($errors) > 0) {
-			// Affichage des erreurs
-			echo '<div class="error">';
-			echo '<ul>';
-			foreach ($errors as $error) {
-				echo '<li>' . $error . '</li>';
-			}
-			echo '</ul>';
-			echo '</div>';
-		}
-	}
+      if (count($errors) > 0) {
+          // Affichage des erreurs
+          echo '<div class="error">';
+          echo '<ul>';
+          foreach ($errors as $error) {
+              echo '<li>' . $error . '</li>';
+          }
+          echo '</ul>';
+          echo '</div>';
+      }
+  }
 }
+
 
 
 
