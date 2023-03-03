@@ -35,7 +35,7 @@ $games = getAllGames();
             <p>Date de sortie : <?= date('d/m/Y', strtotime($game['release_date'])) ?></p>
             <div class="btn-group">
             <a href="/admin/games/form.php?id=<?php echo $game['id']; ?>" class="btn btn-primary">Modifier</a>
-            <a href="delete.php?id=<?php echo $game['id'] ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce jeu ?')">
+            <a  class="btn btn-primary" href="delete.php?id=<?php echo $game['id'] ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce jeu ?')">
     Supprimer
   </a>
             </div>
