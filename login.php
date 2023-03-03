@@ -4,9 +4,12 @@
 require_once('_inc/function.php');
 require_once('_inc/header.php');
 require_once('_inc/nav.php');
-session_start();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
+
 
 <main>
   <div class="container">
@@ -38,7 +41,7 @@ session_start();
     // Test de la connexion avec les informations d'identification "johndoe@example.com" et "secret123"
 
     processForm();
-    $notice = getSessionFlashMessage('notice');
+    $notice = getSessionFlashMessages('notice');
 	
 	// Affichage de la notice s'il y en a une
 	if ($notice != null) {

@@ -2,11 +2,11 @@
 
 
 
-function isLong(string $value, int $lenght):bool {
+function isLongs(string $value, int $lenght):bool {
     return strlen($value) >= $lenght ? true:false;
   }
   
-  function isEmail(string|null $value):bool {
+  function isEmails(string|null $value):bool {
     return filter_var($value, FILTER_VALIDATE_EMAIL);
   }
   
@@ -14,11 +14,11 @@ function isLong(string $value, int $lenght):bool {
   function isValid(): bool {
     $constraints = [
       'email' => [
-        'isValidate' => isEmail(getValues()['email']),
+        'isValidate' => isEmails(getValues()['email']),
         'message' => 'L\'adresse email est invalide',
       ],
       'password' => [
-        'isValidate' => isLong(getValues()['password'], 8),
+        'isValidate' => isLongs(getValues()['password'], 8),
         'message' => 'Le mot de passe doit contenir au moins 8 caractères',
       ],
     ];
@@ -88,7 +88,7 @@ return true;
     }
   }
   
-function getSessionFlashMessage($key) {
+function getSessionFlashMessages($key) {
   if (array_key_exists($key, $_SESSION)) {
     $message = $_SESSION[$key];
     unset($_SESSION[$key]);
@@ -150,4 +150,30 @@ function getValues():array {
     return $connection;
   }
   
+
+
+// etape 3
+
+function getSessionData($key) {
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+  if (isset($_SESSION) && is_array($_SESSION) && array_key_exists($key, $_SESSION)) {
+      return $_SESSION[$key];
+  } else {
+      return null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

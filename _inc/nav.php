@@ -1,3 +1,10 @@
+<?php
+require_once '_inc/function.php';
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+?>
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/"><img src="/img/logo.png"></a>
@@ -15,11 +22,15 @@
       <li class="nav-item">
         <a class="nav-link" href="/contact.php">Contact</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/login.php">login</a>
-      </li>
-      
-      
+      <?php if (getSessionData('user')): ?>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout.php">Logout</a>
+        </li>
+      <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link" href="/login.php">Login</a>
+        </li>
+      <?php endif; ?>
     </ul>
   </div>
 </nav>
