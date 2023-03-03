@@ -28,23 +28,23 @@ require_once('../../admin/_inc/nav.php');
               </div>
               <div class="form-group">
                 <label for="title">Title :</label>
-                <input type="text" name="title" id="title" class="form-control">
+                <input type="text" name="title" id="title" class="form-control" value="<?= getValues()['title'] ?? null; ?>">
               </div>
               <div class="form-group">
                 <label for="description">Description :</label>
-                <textarea name="description" id="description"></textarea>
+                <textarea name="description" id="description" value="<?= getValues()['description'] ?? null; ?>"></textarea>
               </div>
               <div class="form-group">
                 <label for="release_date">release_date :</label>
-                <input type="date" id="release_date" name="release_date">
+                <input type="date" id="release_date" name="release_date" value="<?= getValues()['release_date'] ?? null; ?>">
               </div>
               <div class="form-group">
                 <label for="title">Poster :</label>
-                <input type="text" name="poster" id="poster" class="form-control">
+                <input type="text" name="poster" id="poster" class="form-control" value="<?= getValues()['poster'] ?? null; ?>">
               </div>
               <div class="form-group">
                 <label for="title">Price :</label>
-                <input type="text" name="price" id="price" class="form-control">
+                <input type="text" name="price" id="price" class="form-control" value="<?= getValues()['price'] ?? null; ?>">
               </div>
               <br/>
               <button type="submit" name="submit" class="btn btn-primary">Envoyer</button>
@@ -55,7 +55,7 @@ require_once('../../admin/_inc/nav.php');
     </div>
   </div>
   
-  
+  <center><?php processGameForm(); ?>  </center>
 </main>
 <?php
 require_once('../../_inc/footer.php');
