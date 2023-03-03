@@ -9,7 +9,7 @@
       <a class="nav-link" href="../index.php">Accueil</a>
       </li>
       <li class="nav-item">
-      <a  class="nav-link" href="games/index.php">Jeux</a></p>
+      <a  class="nav-link" href="/admin/games/index.php">Jeux</a></p>
       </li>
       <li class="nav-item">
       <a class="nav-link" href="../../logout.php">Déconnexion</a>

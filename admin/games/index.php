@@ -28,7 +28,7 @@ $games = getAllGames();
             <p>Prix : <?= $game['price'] ?> €</p>
             <p>Date de sortie : <?= date('d/m/Y', strtotime($game['release_date'])) ?></p>
             <div class="btn-group">
-              <a href="#" class="btn btn-primary">Modifier</a>
+              <a href="/admin/games/form.php" class="btn btn-primary">Modifier</a>
               <a href="#" class="btn btn-danger">Supprimer</a>
             </div>
           </div>
