@@ -79,7 +79,7 @@ return true;
       //if (isSubmitted() && isValid()){
       if (checkUser($email, $password)) {
         $_SESSION['user'] = $email;
-        header('Location: index.php');
+        header('Location: admin/index.php');
         exit;
       } else {
         $_SESSION['notice'] = 'Identifiants incorrects';
@@ -136,13 +136,7 @@ function getValues():array {
   
 
 
-  function getUserByEmail(string $email): ?array {
-    $pdo = connectBDD();
-    $stmt = $pdo->prepare('SELECT * FROM user WHERE email = :email');
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $user ?: null;
-  }
+
 
   function connectBDD():PDO {
   
@@ -167,6 +161,13 @@ function getSessionData($key) {
 
 
 
+function checkAuthentication() {
+  if (!array_key_exists('user', $_SESSION)) {
+      $_SESSION['notice'] = 'Accès refusé';
+      header('Location: /index.php');
+      exit;
+  }
+}
 
 
 

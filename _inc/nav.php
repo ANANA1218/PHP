@@ -31,6 +31,12 @@ if (session_status() === PHP_SESSION_NONE) {
           <a class="nav-link" href="/login.php">Login</a>
         </li>
       <?php endif; ?>
+      <?php if (isset($_SESSION['user'])) : ?>
+        <li class="nav-item">
+      <a class="nav-link" href="admin/index.php">Espace d'administration</a>
+      </li>
+      <?php endif; ?>
+
     </ul>
   </div>
 </nav>
