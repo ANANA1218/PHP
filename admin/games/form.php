@@ -20,7 +20,7 @@ require_once('../../admin/_inc/nav.php');
       <div class="col-md-6">
         <div class="card">
           <div class="card-body">
-            <h1 class="card-title">Modification du Jeux</h1>
+            
             <form method="post">
               <div class="form-group">
                 <label for="id"> Id :</label>
